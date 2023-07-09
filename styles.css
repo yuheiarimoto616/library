@@ -30,7 +30,7 @@ main {
 }
 
 main button {
-    margin-top: 50px;
+    margin-top: 40px;
     border: none;
     border-radius: 10px;
     font-size: var(--font-size);
@@ -66,14 +66,29 @@ main button:hover {
 }
 
 input[class="newBookInput"] {
+    box-sizing: border-box;
     border: none;
     padding: 10px;
     border-radius: 10px;
     font-size: var(--font-size);
+    width: 100%;
 }
 
 input[class="newBookInput"]:invalid {
     border: 2px solid darkred;
+}
+
+input[class="newBookInput"] + span {
+    position: relative;
+}
+
+input[class="newBookInput"]:invalid + span::after {
+    position: absolute;
+    top: -35px;
+    left: -60px;
+    color: darkred;
+    font-size: 0.8rem;
+    content: "*required";
 }
 
 label[for="read"] {
@@ -110,7 +125,7 @@ label[for="read"] input {
 .modal form {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 30px;
 }
 
 .modal.active {

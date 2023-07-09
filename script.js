@@ -3,7 +3,11 @@ let mylibrary = [];
 function Book(title, author, pages, read) {
     this.title = title;
     this.author = author;
-    this.pages = pages;
+    if (pages == '') {
+        this.pages = null;
+    } else {
+        this.pages = pages;
+    }
     this.read = read;
 }
 
@@ -39,12 +43,18 @@ function addNewBook(e) {
     let pages = document.getElementById('pages').value;
     let read = document.getElementById('read').checked;
 
+    if (title == "" || author == "") {
+        return;
+    }
+
     document.getElementById('title').value = "";
     document.getElementById('author').value = "";
     document.getElementById('pages').value = "";
     document.getElementById('read').checked = false;
 
     addBookToLibrary(title, author, pages, read);
+
+    console.table(mylibrary);
     
     dismissDisplay();
     e.preventDefault();

@@ -14,13 +14,19 @@
     </header>
     <main>
         <button id="addBookBtn">+ NEW BOOK</button>
+        
+        <div class="container"></div>
     </main>
     <div class="modal">
         <form action="">
             <h1>Add New Book</h1>
-            <input class="newBookInput" type="text" id="title" name="title" placeholder="Title" required>
+            <div class="required">
+                <input class="newBookInput" type="text" id="title" name="title" placeholder="Title" required><span></span>
+            </div>
 
-            <input class="newBookInput" type="text" id="author" name="author" placeholder="Author" required>
+            <div class="required">
+                <input class="newBookInput" type="text" id="author" name="author" placeholder="Author" required><span></span>
+            </div>
         
             <input class="newBookInput" type="number" id="pages" name="pages" placeholder="Number of Pages">
             
