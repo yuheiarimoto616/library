@@ -20,6 +20,7 @@ function addBookToLibrary(title, author, pages, read) {
 function createBookCard(book) {
     let item = document.createElement('div');
     item.classList.add('item');
+    item.setAttribute("index", mylibrary.length - 1);
 
     let info = document.createElement('div');
     info.classList.add('info');
@@ -55,6 +56,8 @@ function createBookCard(book) {
 
     let remove = document.createElement('button');
     remove.textContent = "Remove";
+    remove.setAttribute("index", mylibrary.length - 1);
+    remove.addEventListener('click', removeBook);
     buttons.appendChild(remove);
 
     item.appendChild(info);
@@ -108,5 +111,17 @@ function addNewBook(e) {
     
     dismissDisplay();
     e.preventDefault();
+}
+
+function removeBook(e) {
+    let index = e.target.getAttribute("index");
+    let target = document.querySelector(`div[index="${index}"]`);
+    
+    mylibrary.splice(index, 1);
+
+    document.querySelector('.container').removeChild(target);
+    console.log(mylibrary);
+    console.log(target);
+    console.log(e.target);
 }
 
