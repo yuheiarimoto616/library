@@ -17,10 +17,21 @@ function addBookToLibrary(title, author, pages, read) {
     mylibrary.push(book);
 }
 
-function createBookCard(book) {
+function displayAllBooks() {
+    let container = document.querySelector('.container');
+
+    while (container.firstChild) {
+        container.removeChild(container.firstChild);
+    }
+
+    for (let i = 0; i < mylibrary.length; i++) {
+        createBookCard(mylibrary[i], i);
+    }
+}
+
+function createBookCard(book, index) {
     let item = document.createElement('div');
     item.classList.add('item');
-    item.setAttribute("index", mylibrary.length - 1);
 
     let info = document.createElement('div');
     info.classList.add('info');
@@ -52,11 +63,13 @@ function createBookCard(book) {
         readBtn.classList.add("notRead");
         readBtn.textContent = "Not Read";
     }
+    readBtn.setAttribute("index", index);
+    readBtn.addEventListener('click', changeReadStatus);
     buttons.appendChild(readBtn);
 
     let remove = document.createElement('button');
     remove.textContent = "Remove";
-    remove.setAttribute("index", mylibrary.length - 1);
+    remove.setAttribute("index", index);
     remove.addEventListener('click', removeBook);
     buttons.appendChild(remove);
 
@@ -65,19 +78,7 @@ function createBookCard(book) {
 
     let container = document.querySelector('.container');
     container.appendChild(item);
-
-    console.log(item);
 }
-
-let addBookBtn = document.getElementById("addBookBtn");
-let modal = document.querySelector('.modal');
-let overlay = document.querySelector('.overlay');
-let submit = document.querySelector('button[type="submit"]');
-
-
-addBookBtn.addEventListener('click', displayAddBookForm);
-overlay.addEventListener('click', dismissDisplay);
-submit.addEventListener('click', addNewBook);
 
 function displayAddBookForm() {
     modal.classList.add('active');
@@ -105,9 +106,7 @@ function addNewBook(e) {
     document.getElementById('read').checked = false;
 
     addBookToLibrary(title, author, pages, read);
-    createBookCard(mylibrary[mylibrary.length - 1]);
-
-    console.table(mylibrary);
+    createBookCard(mylibrary[mylibrary.length - 1], mylibrary.length - 1);
     
     dismissDisplay();
     e.preventDefault();
@@ -115,13 +114,34 @@ function addNewBook(e) {
 
 function removeBook(e) {
     let index = e.target.getAttribute("index");
-    let target = document.querySelector(`div[index="${index}"]`);
-    
+
     mylibrary.splice(index, 1);
 
-    document.querySelector('.container').removeChild(target);
-    console.log(mylibrary);
-    console.log(target);
-    console.log(e.target);
+    displayAllBooks();
 }
 
+function changeReadStatus(e) {
+    let index = e.target.getAttribute("index");
+
+    mylibrary[index].read = !mylibrary[index].read;
+
+    if (mylibrary[index].read) {
+        e.target.classList.remove('notRead');
+        e.target.textContent = "Read";
+    } else {
+        e.target.classList.add('notRead');
+        e.target.textContent = "Not Read";
+    }
+
+    console.table(mylibrary);
+}
+
+let addBookBtn = document.getElementById("addBookBtn");
+let modal = document.querySelector('.modal');
+let overlay = document.querySelector('.overlay');
+let submit = document.querySelector('button[type="submit"]');
+
+
+addBookBtn.addEventListener('click', displayAddBookForm);
+overlay.addEventListener('click', dismissDisplay);
+submit.addEventListener('click', addNewBook);
